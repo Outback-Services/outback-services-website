@@ -1,0 +1,41 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { site } from '../../config/site';
+
+const { bots, botUseCases } = site;
+---
+
+<section id="bots" aria-labelledby="bots-title" class="tone-bots relative isolate border-t border-glass-border py-24 sm:py-32">
+  <div class="edge-glow top-1/3 -right-80 size-[40rem] bg-cyan/10"></div>
+
+  <div class="mx-auto grid max-w-7xl gap-14 px-4 sm:px-6 lg:grid-cols-[1fr_1.15fr] lg:gap-20 lg:px-8">
+    <div class="lg:sticky lg:top-[calc(var(--nav-height)+3rem)] lg:self-start">
+      <SectionHeading id="bots-title">
+        {bots.title}
+        <Fragment slot="lead">{bots.lead}</Fragment>
+      </SectionHeading>
+      <div class="mt-9" data-reveal>
+        <Button url={site.discordUrl} size="lg" icon="ticket" arrow magnetic>{bots.cta}</Button>
+        <p class="mt-4 max-w-[44ch] text-sm text-fg-subtle">{bots.ctaNote}</p>
+      </div>
+    </div>
+
+    <ul class="divide-y divide-glass-border border-y border-glass-border" role="list" data-reveal-group>
+      {
+        botUseCases.map((u) => (
+          <li class="flex gap-5 py-7" data-reveal>
+            <span class="grid size-11 shrink-0 place-items-center rounded-control border border-bots/30 bg-bots/8 text-bots">
+              <Icon name={u.icon} class="size-5" />
+            </span>
+            <div>
+              <h3 class="text-lg font-bold">{u.title}</h3>
+              <p class="mt-1.5 leading-relaxed text-fg-muted">{u.body}</p>
+            </div>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

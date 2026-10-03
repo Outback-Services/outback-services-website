@@ -114,6 +114,12 @@ export const site = {
   },
 
   // ── Custom Discord bots ──────────────────────────────────────────────────
+  bots: {
+    title: 'Custom Discord bots, built around your server',
+    lead: 'Your community runs on Discord as much as it runs in-game. We build bots that handle the busywork, so your staff can get back to running RP.',
+    cta: 'Open a ticket',
+    ctaNote: 'Tell us what you need and we’ll come back with a scope and a fixed quote.',
+  },
   botUseCases: [
     {
       title: 'Whitelist applications',

@@ -1,0 +1,44 @@
+---
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { site } from '../../config/site';
+import { externalAttrs } from '../../lib/links';
+
+const TOKEN = '{tebexRefundPolicyUrl}';
+---
+
+<section id="faq" aria-labelledby="faq-title" class="relative isolate border-t border-glass-border py-24 sm:py-32">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading id="faq-title">{site.faqTitle}</SectionHeading>
+
+    <div class="mt-12 border-t border-glass-border" data-reveal>
+      {
+        site.faq.map((item) => {
+          const [before, after] = item.a.split(TOKEN);
+          return (
+            <details class="group border-b border-glass-border">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-6 text-left text-lg font-semibold [&::-webkit-details-marker]:hidden">
+                {item.q}
+                <Icon
+                  name="chevron-down"
+                  class="size-5 shrink-0 text-fg-subtle transition-transform duration-300 group-open:rotate-180"
+                />
+              </summary>
+              <p class="max-w-[62ch] pb-7 leading-relaxed text-fg-muted">
+                {before}
+                {after !== undefined && (
+                  <>
+                    <a {...externalAttrs(site.tebexRefundPolicyUrl)} class="font-medium text-bots underline underline-offset-4">
+                      refund policy
+                    </a>
+                    {after}
+                  </>
+                )}
+              </p>
+            </details>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,27 @@
+---
+import SectionHeading from '../ui/SectionHeading.astro';
+import { site } from '../../config/site';
+---
+
+<section aria-labelledby="standards-title" class="relative isolate border-t border-glass-border py-24 sm:py-32">
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading id="standards-title">{site.standardsTitle}</SectionHeading>
+
+    <ul class="mt-14 grid border-t border-glass-border md:grid-cols-2" role="list" data-reveal-group>
+      {
+        site.standards.map((item, i) => (
+          <li
+            class:list={[
+              'border-b border-glass-border py-9 md:py-12',
+              i % 2 === 0 ? 'md:pr-12' : 'md:border-l md:pl-12',
+            ]}
+            data-reveal
+          >
+            <h3 class="text-2xl leading-tight font-extrabold tracking-[-0.02em] sm:text-3xl">{item.title}</h3>
+            <p class="mt-3 max-w-[46ch] leading-relaxed text-fg-muted">{item.body}</p>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</section>

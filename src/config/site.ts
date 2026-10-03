@@ -31,7 +31,6 @@ export interface NavLink {
 export interface Commitment {
   title: string;
   body: string;
-  icon: 'gauge' | 'sliders' | 'book' | 'chat';
 }
 
 export interface ProcessStep {
@@ -169,30 +168,29 @@ export const site = {
   ],
 
   // ── Standards ────────────────────────────────────────────────────────────
+  standardsTitle: 'What you can count on',
   standards: [
     {
-      title: 'Performance tested',
-      body: 'Every release is profiled on a live server before it ships. If it shows up in resmon, it gets fixed.',
-      icon: 'gauge',
+      title: 'Every release is performance tested.',
+      body: 'Scripts are profiled on a live server before they ship. If something shows up in resmon, it gets fixed first.',
     },
     {
-      title: 'Clean configs',
-      body: 'Sensible defaults, clearly commented options and no digging through code to change a label.',
-      icon: 'sliders',
+      title: 'Configs you can actually read.',
+      body: 'Sensible defaults and clearly commented options. Changing a label or a price never means digging through code.',
     },
     {
-      title: 'Documented',
-      body: 'Install steps, config references and exports written down, not left in someone’s head.',
-      icon: 'book',
+      title: 'Documented before it ships.',
+      body: 'Install steps, config references and exports are written down, not left in someone’s head.',
     },
     {
-      title: 'Supported in Discord',
-      body: 'Questions and bug reports go straight to the person who wrote the code.',
-      icon: 'chat',
+      title: 'Supported in Discord.',
+      body: 'Questions and bug reports go to the person who wrote the code, in a ticket you can follow.',
     },
   ] as Commitment[],
 
   // ── Process ──────────────────────────────────────────────────────────────
+  processTitle: 'How a commission works',
+  processLead: 'Every custom job, FiveM or Discord, follows the same five steps. You’ll always know where things are.',
   process: [
     { title: 'Open a ticket', body: 'Tell us what you need in the Outback Discord.' },
     { title: 'Scope & quote', body: 'We pin down features, framework and a fixed price.' },
@@ -203,14 +201,23 @@ export const site = {
 
   // ── Founder ──────────────────────────────────────────────────────────────
   founder: {
+    title: 'Who you’ll be working with',
     name: 'Tucker',
     role: 'Founder & developer',
     bio: '{{TUCKER_BIO}}',
     /** Path under /public. Leave empty to show the placeholder. */
     avatar: '',
+    cta: 'Say g’day in the Discord',
+  },
+
+  // ── Work / open source (hidden unless showGithubRepos) ──────────────────
+  work: {
+    title: 'Open source',
+    lead: 'Some of what we build is public. Have a look at the code.',
   },
 
   // ── FAQ ──────────────────────────────────────────────────────────────────
+  faqTitle: 'Questions we get a lot',
   faq: [
     {
       q: 'What does “escrowed” mean for me as a buyer?',
@@ -242,6 +249,12 @@ export const site = {
   finalCta: {
     title: 'Got a server that deserves better?',
     body: 'Jump in the Discord, open a ticket and tell us what you’re building.',
+  },
+
+  // ── Footer ───────────────────────────────────────────────────────────────
+  footer: {
+    disclaimer:
+      'Outback Services is an independent studio and is not affiliated with or endorsed by Discord Inc., Cfx.re or Rockstar Games.',
   },
 
   // ── SEO ──────────────────────────────────────────────────────────────────

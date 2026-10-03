@@ -1,0 +1,49 @@
+---
+import Button from '../ui/Button.astro';
+import { isPlaceholder, site } from '../../config/site';
+
+const { founder } = site;
+const bioMissing = isPlaceholder(founder.bio);
+---
+
+<section aria-labelledby="founder-title" class="relative isolate border-t border-glass-border py-24 sm:py-32">
+  <div class="mx-auto max-w-3xl px-4 sm:px-6 lg:px-8">
+    <h2 id="founder-title" class="text-4xl leading-[1.05] font-extrabold sm:text-5xl" data-reveal>{founder.title}</h2>
+
+    <figure class="glass mt-12 p-7 sm:p-10" data-reveal>
+      <div class="flex items-center gap-5">
+        {
+          founder.avatar ? (
+            <img src={founder.avatar} alt={`${founder.name}`} width="72" height="72" loading="lazy" class="size-18 rounded-full object-cover" />
+          ) : (
+            <span
+              role="img"
+              aria-label={`${founder.name} avatar placeholder`}
+              class="grid size-18 shrink-0 place-items-center rounded-full border-2 border-dashed border-glass-border-strong bg-ink-800 font-display text-2xl font-extrabold text-fg-muted"
+            >
+              {founder.name.charAt(0)}
+            </span>
+          )
+        }
+        <figcaption>
+          <p class="text-xl font-bold">{founder.name}</p>
+          <p class="text-sm text-fg-subtle">{founder.role}</p>
+        </figcaption>
+      </div>
+
+      {
+        bioMissing ? (
+          <p class="mt-7 rounded-panel border border-dashed border-glass-border-strong p-4 text-sm text-fg-subtle">
+            {founder.name}’s bio goes here. Set <code>founder.bio</code> in src/config/site.ts.
+          </p>
+        ) : (
+          <blockquote class="mt-7 text-lg leading-relaxed text-fg-muted">
+            <p>{founder.bio}</p>
+          </blockquote>
+        )
+      }
+
+      <Button url={site.discordUrl} variant="ghost" icon="discord" class="mt-8">{founder.cta}</Button>
+    </figure>
+  </div>
+</section>

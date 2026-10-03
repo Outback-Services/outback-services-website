@@ -28,7 +28,7 @@ export default defineConfig({
   compressHTML: true,
   integrations: [
     react(),
-    sitemap({ filter: (page) => !page.includes('/tokens') }),
+    sitemap({ filter: (page) => !page.includes('/404') }),
     placeholderReport(),
   ],
   vite: {

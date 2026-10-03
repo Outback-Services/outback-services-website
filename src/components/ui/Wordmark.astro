@@ -1,0 +1,16 @@
+---
+import { site } from '../../config/site';
+
+interface Props {
+  class?: string;
+  /** Shimmer the gradient (hero/nav only; paused off-screen). */
+  shimmer?: boolean;
+}
+const { class: className = '', shimmer = false } = Astro.props;
+const [first, ...rest] = site.name.split(' ');
+---
+
+<span class:list={['font-display font-extrabold tracking-[-0.03em] whitespace-nowrap', className]}>
+  <span class:list={['text-gradient', shimmer && 'shimmer']}>{first}</span>
+  <span class="text-fg">{rest.join(' ')}</span>
+</span>

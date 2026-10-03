@@ -132,6 +132,14 @@ export const site = {
 
   // ── Wally ────────────────────────────────────────────────────────────────
   wallyFeatures: ['Moderation', 'Utility', 'Tickets', 'Levels', 'Giveaways'],
+  wallyAbout: 'Free bot by Outback Services. Moderation, tickets, levels and giveaways for your community.',
+  /** Shown in the faux slash-command popup. */
+  wallyCommands: [
+    { name: 'giveaway start', description: 'Run a giveaway in this channel' },
+    { name: 'ticket open', description: 'Open a private support ticket' },
+    { name: 'rank', description: 'Check your level and XP' },
+    { name: 'warn', description: 'Warn a member, with a logged reason' },
+  ],
 
   // ── Standards ────────────────────────────────────────────────────────────
   standards: [

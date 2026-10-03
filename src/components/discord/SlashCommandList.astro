@@ -1,0 +1,33 @@
+---
+/** Faux Discord slash-command autocomplete popup. Decorative: hidden from AT. */
+import WallyAvatar from '../ui/WallyAvatar.astro';
+import { site } from '../../config/site';
+
+interface Props {
+  class?: string;
+}
+const { class: className = '' } = Astro.props;
+---
+
+<div
+  aria-hidden="true"
+  class:list={['w-72 overflow-hidden rounded-panel border border-glass-border bg-ink-800 shadow-panel select-none', className]}
+>
+  <p class="px-3 pt-3 pb-2 text-[11px] font-semibold text-fg-subtle">Commands matching <span class="text-fg">/</span></p>
+  <ul class="px-1.5 pb-1.5">
+    {
+      site.wallyCommands.map((cmd, i) => (
+        <li class:list={['flex items-center gap-2.5 rounded-[4px] px-2 py-1.5', i === 0 && 'bg-glass-strong']}>
+          <WallyAvatar compact decorative sizes="20px" class="size-5 shrink-0" />
+          <span class="min-w-0">
+            <span class="block truncate text-[13px] font-semibold text-fg">/{cmd.name}</span>
+            <span class="block truncate text-[11px] text-fg-subtle">{cmd.description}</span>
+          </span>
+        </li>
+      ))
+    }
+  </ul>
+  <div class="border-t border-glass-border bg-ink-950/50 px-3 py-2 text-[13px] text-fg-muted">
+    <span class="text-bots">/giveaway start</span>
+  </div>
+</div>

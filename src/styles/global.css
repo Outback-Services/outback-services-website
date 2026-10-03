@@ -351,10 +351,11 @@
   }
 }
 
-/* Pause every CSS loop inside a scope that is off-screen. */
-[data-anim-scope]:not([data-inview]) *,
-[data-anim-scope]:not([data-inview]) *::before,
-[data-anim-scope]:not([data-inview]) *::after {
+/* Pause every CSS loop inside a scope that is off-screen (JS sets data-inview;
+   without JS nothing is paused). */
+html.js [data-anim-scope]:not([data-inview]) *,
+html.js [data-anim-scope]:not([data-inview]) *::before,
+html.js [data-anim-scope]:not([data-inview]) *::after {
   animation-play-state: paused !important;
 }
 

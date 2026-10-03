@@ -1,0 +1,107 @@
+---
+import HeroPanels from '../islands/HeroPanels';
+import BotProfileCard from '../discord/BotProfileCard.astro';
+import SlashCommandList from '../discord/SlashCommandList.astro';
+import Button from '../ui/Button.astro';
+import NeonUnderline from '../ui/NeonUnderline.astro';
+import Sparkle from '../ui/Sparkle.astro';
+import WallyAvatar from '../ui/WallyAvatar.astro';
+import { site } from '../../config/site';
+import { externalAttrs } from '../../lib/links';
+
+const { hero } = site;
+---
+
+<section
+  data-hero
+  data-anim-scope
+  aria-labelledby="hero-title"
+  class="relative isolate flex items-center overflow-hidden pt-[calc(var(--nav-height)+1rem)] pb-16 sm:pt-[calc(var(--nav-height)+2.5rem)] lg:min-h-[min(100svh,60rem)] lg:pb-24"
+>
+  <!-- Layer 1: edge glows -->
+  <div class="edge-glow -top-64 -left-64 size-[44rem] bg-magenta/18"></div>
+  <div class="edge-glow top-1/4 -right-72 hidden size-[44rem] bg-cyan/14 lg:block"></div>
+
+  <!-- Layer 2: neon streaks, drawn once at load -->
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    class="pointer-events-none absolute inset-0 -z-10 hidden size-full sm:block"
+    viewBox="0 0 1440 900"
+    preserveAspectRatio="xMidYMid slice"
+    fill="none"
+  >
+    <path
+      d="M-40 880C260 850 520 860 760 790s430-210 720-230"
+      pathLength="1"
+      stroke="var(--color-magenta)"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      class="opacity-50 motion-safe:animate-draw"
+      style="stroke-dasharray: 1; --dash: 1; animation-delay: 300ms; animation-duration: 2.2s"
+    ></path>
+    <path
+      d="M900 250c110 30 230 20 340-30 70-32 140-48 240-36"
+      pathLength="1"
+      stroke="var(--color-cyan)"
+      stroke-width="1.5"
+      stroke-linecap="round"
+      class="opacity-45 motion-safe:animate-draw"
+      style="stroke-dasharray: 1; --dash: 1; animation-delay: 700ms; animation-duration: 1.8s"
+    ></path>
+  </svg>
+
+  <div class="mx-auto grid w-full max-w-7xl items-center gap-8 px-4 sm:gap-12 sm:px-6 lg:grid-cols-[1.1fr_1fr] lg:gap-8 lg:px-8">
+    <!-- Copy -->
+    <div class="order-2 lg:order-1">
+      <p class="tagline tracking-[0.22em] sm:tracking-(--tracking-tagline)">{hero.tagline}</p>
+      <h1
+        id="hero-title"
+        class="mt-5 text-[2.6rem] leading-[1.02] font-extrabold tracking-[-0.035em] sm:text-6xl lg:text-[4.4rem]"
+      >
+        {hero.headlineLead}
+        <NeonUnderline delay={450}>{hero.headlineHighlight}</NeonUnderline>
+      </h1>
+      <p class="mt-6 max-w-[54ch] text-base leading-relaxed text-fg-muted sm:mt-7 sm:text-lg">{hero.subline}</p>
+      <div class="mt-8 flex flex-wrap items-center gap-3 sm:mt-9">
+        <Button url={site.discordUrl} size="lg" icon="discord" arrow magnetic>{hero.primaryCta}</Button>
+        <Button url={site.tebexUrl} size="lg" variant="ghost">{hero.secondaryCta}</Button>
+      </div>
+      <p class="mt-7 text-sm text-fg-subtle">
+        Running a Discord?
+        <a {...externalAttrs(site.wallyInviteUrl)} class="font-medium text-fg-muted underline decoration-wally/70 underline-offset-4 hover:text-fg">
+          Add Wally for free
+        </a>
+      </p>
+    </div>
+
+    <!-- Visual: Wally + glow ring + orbiting sparkles, Discord panels behind -->
+    <div class="relative order-1 mx-auto w-[min(52vw,12rem)] sm:w-[22rem] lg:order-2 lg:w-[28rem] xl:w-[30rem]">
+      <div class="relative aspect-square">
+        <HeroPanels client:media="(hover: hover) and (pointer: fine)">
+          <BotProfileCard slot="profile" />
+          <SlashCommandList slot="commands" />
+        </HeroPanels>
+
+        <!-- Rotating conic glow ring -->
+        <div
+          aria-hidden="true"
+          class="absolute inset-[3%] rounded-full opacity-55 blur-2xl motion-safe:animate-spin-slow"
+          style="background: conic-gradient(from 0deg, var(--color-magenta), var(--color-violet), var(--color-cyan), var(--color-magenta))"
+        >
+        </div>
+
+        <!-- Orbit with sparkles -->
+        <div aria-hidden="true" class="absolute -inset-[4%] z-20 motion-safe:animate-orbit">
+          <Sparkle class="absolute top-[6%] left-1/2 size-5" color="text-cyan" delay={200} />
+          <Sparkle class="absolute bottom-[14%] left-[4%] size-3.5" color="text-magenta" delay={1400} />
+          <Sparkle class="absolute top-[40%] right-0 size-3" color="text-fg" delay={2400} />
+        </div>
+
+        <div class="relative z-10 mx-auto mt-[9%] w-[82%] motion-safe:animate-float">
+          <WallyAvatar priority sizes="(min-width: 1280px) 400px, (min-width: 1024px) 370px, (min-width: 640px) 290px, 56vw" class="size-full" />
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -23,6 +23,9 @@ export default defineConfig({
   site: site.siteUrl,
   output: 'static',
   trailingSlash: 'ignore',
+  // Astro 7 defaults to JSX whitespace rules, which drop the space between
+  // inline elements across line breaks. Lossless HTML compression keeps it.
+  compressHTML: true,
   integrations: [
     react(),
     sitemap({ filter: (page) => !page.includes('/tokens') }),

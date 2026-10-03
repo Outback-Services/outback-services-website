@@ -1,0 +1,75 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import Wordmark from '../ui/Wordmark.astro';
+import { site } from '../../config/site';
+import { externalAttrs } from '../../lib/links';
+---
+
+<header data-nav class="group/nav fixed inset-x-0 top-0 z-50">
+  <!-- Glass background fades in on scroll (opacity only). -->
+  <div
+    aria-hidden="true"
+    class="absolute inset-0 -z-10 border-b border-glass-border bg-ink-950/80 opacity-0 backdrop-blur-md transition-opacity duration-300 group-data-[open]/nav:opacity-100 group-data-[scrolled]/nav:opacity-100"
+  >
+  </div>
+
+  <nav aria-label="Main" class="mx-auto flex h-(--nav-height) max-w-7xl items-center gap-2 px-4 sm:px-6 lg:px-8">
+    <a href="/" class="mr-auto rounded-md text-lg sm:text-xl" aria-label={`${site.name} home`}>
+      <Wordmark />
+    </a>
+
+    <ul class="hidden items-center md:flex" role="list">
+      {
+        site.nav.map((link) => (
+          <li>
+            <a href={link.href} class="rounded-md px-3 py-2 text-sm font-medium text-fg-muted transition-colors hover:text-fg">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <a
+      {...externalAttrs(site.githubUrl)}
+      class="hidden size-10 items-center justify-center rounded-control text-fg-muted transition-colors hover:text-fg sm:inline-flex md:ml-2"
+    >
+      <Icon name="github" class="size-5" label="Outback Services on GitHub" />
+    </a>
+
+    <!-- Primary conversion stays visible at every width. -->
+    <Button url={site.discordUrl} icon="discord" class="ml-1" magnetic>Join Discord</Button>
+
+    <button
+      type="button"
+      data-menu-toggle
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      class="-mr-2 inline-flex size-11 items-center justify-center rounded-control text-fg md:hidden"
+    >
+      <span class="sr-only">Menu</span>
+      <Icon name="menu" class="size-6 group-data-[open]/nav:hidden" />
+      <Icon name="x" class="hidden size-6 group-data-[open]/nav:block" />
+    </button>
+  </nav>
+
+  <div id="mobile-menu" hidden class="md:hidden">
+    <ul class="mx-auto max-w-7xl px-4 pt-2 pb-6 sm:px-6" role="list">
+      {
+        site.nav.map((link) => (
+          <li>
+            <a href={link.href} class="block rounded-md py-3 text-lg font-semibold text-fg">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+      <li>
+        <a {...externalAttrs(site.githubUrl)} class="flex items-center gap-2 rounded-md py-3 text-lg font-semibold text-fg-muted">
+          <Icon name="github" class="size-5" /> GitHub
+        </a>
+      </li>
+    </ul>
+  </div>
+</header>

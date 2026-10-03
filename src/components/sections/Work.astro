@@ -1,0 +1,55 @@
+---
+/**
+ * Open-source work. Renders nothing unless site.showGithubRepos is true, so
+ * the GitHub API is only called when the section is switched on.
+ */
+import Icon from '../ui/Icon.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import { site } from '../../config/site';
+import { getRepos, type Repo } from '../../lib/github';
+
+let repos: Repo[] = [];
+if (site.showGithubRepos) {
+  ({ repos } = await getRepos(site.githubOrg));
+}
+---
+
+{
+  site.showGithubRepos && repos.length > 0 && (
+    <section id="work" aria-labelledby="work-title" class="relative isolate border-t border-glass-border py-24 sm:py-32">
+      <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <SectionHeading id="work-title">
+          {site.work.title}
+          <Fragment slot="lead">{site.work.lead}</Fragment>
+        </SectionHeading>
+
+        <ul class="mt-12 grid gap-4 md:grid-cols-2" role="list" data-reveal-group>
+          {repos.slice(0, 6).map((repo) => (
+            <li data-reveal>
+              <a
+                href={repo.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="glass glow-card flex h-full flex-col p-6 transition-colors hover:border-glass-border-strong"
+              >
+                <span class="flex items-center gap-2 text-lg font-bold">
+                  <Icon name="github" class="size-4 text-fg-subtle" />
+                  {repo.name}
+                </span>
+                {repo.description && <span class="mt-2 flex-1 text-sm leading-relaxed text-fg-muted">{repo.description}</span>}
+                <span class="mt-4 flex items-center gap-4 text-xs text-fg-subtle">
+                  {repo.language && <span>{repo.language}</span>}
+                  <span class="inline-flex items-center gap-1">
+                    <Icon name="star" class="size-3.5" />
+                    {repo.stars}
+                    <span class="sr-only">stars</span>
+                  </span>
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  )
+}

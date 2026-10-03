@@ -1,0 +1,43 @@
+---
+import WallyChatDemo from '../islands/WallyChatDemo';
+import Button from '../ui/Button.astro';
+import Pill from '../ui/Pill.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import Sparkle from '../ui/Sparkle.astro';
+import { brand, wallySrc } from '../../lib/brand';
+import { site } from '../../config/site';
+
+const { wally, wallyFeatures } = site;
+---
+
+<section id="wally" aria-labelledby="wally-title" data-anim-scope class="tone-wally relative isolate border-t border-glass-border py-24 sm:py-32">
+  <div class="edge-glow top-10 -left-64 size-[38rem] bg-violet/14"></div>
+
+  <div class="mx-auto grid max-w-7xl items-center gap-14 px-4 sm:px-6 lg:grid-cols-[1.05fr_1fr] lg:gap-20 lg:px-8">
+    <div class="relative order-2 lg:order-1" data-reveal>
+      <Sparkle class="absolute -top-4 -right-2 z-10 size-6" color="text-wally" />
+      <WallyChatDemo
+        client:visible
+        channel={wally.channel}
+        user={wally.demoUser}
+        prize={wally.giveawayPrize}
+        avatarSrc={brand.hasWally ? wallySrc(256) : null}
+      />
+    </div>
+
+    <div class="order-1 lg:order-2">
+      <SectionHeading id="wally-title">
+        {wally.title}
+        <Fragment slot="lead">{wally.lead}</Fragment>
+      </SectionHeading>
+
+      <ul class="mt-8 flex flex-wrap gap-2" role="list" aria-label="What Wally does" data-reveal>
+        {wallyFeatures.map((f) => <li><Pill tone="accent" icon="check" class="[&_svg]:text-wally">{f}</Pill></li>)}
+      </ul>
+
+      <div class="mt-9" data-reveal>
+        <Button url={site.wallyInviteUrl} size="lg" icon="discord" arrow magnetic>{wally.cta}</Button>
+      </div>
+    </div>
+  </div>
+</section>

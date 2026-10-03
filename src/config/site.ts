@@ -150,7 +150,16 @@ export const site = {
 
   // ── Wally ────────────────────────────────────────────────────────────────
   wallyFeatures: ['Moderation', 'Utility', 'Tickets', 'Levels', 'Giveaways'],
-  wallyAbout: 'Free bot by Outback Services. Moderation, tickets, levels and giveaways for your community.',
+  wally: {
+    title: 'Meet Wally. He’s free.',
+    lead: 'Wally is our own Discord bot, free for any server. He handles moderation, tickets, levels and giveaways, and he’s a taste of how we build everything else.',
+    cta: 'Add Wally — it’s free',
+    // Chat demo copy
+    channel: 'giveaways',
+    demoUser: 'Tucker',
+    giveawayPrize: 'Custom MLO',
+  },
+  wallyAbout:'Free bot by Outback Services. Moderation, tickets, levels and giveaways for your community.',
   /** Shown in the faux slash-command popup. */
   wallyCommands: [
     { name: 'giveaway start', description: 'Run a giveaway in this channel' },

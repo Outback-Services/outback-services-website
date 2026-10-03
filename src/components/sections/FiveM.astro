@@ -1,0 +1,102 @@
+---
+import Button from '../ui/Button.astro';
+import Icon from '../ui/Icon.astro';
+import Pill from '../ui/Pill.astro';
+import SectionHeading from '../ui/SectionHeading.astro';
+import ProductCard from './ProductCard.astro';
+import { site } from '../../config/site';
+
+const { fivem, products, frameworks, fivemCallouts } = site;
+---
+
+<section id="fivem" aria-labelledby="fivem-title" data-anim-scope class="tone-fivem relative isolate py-24 sm:py-32">
+  <div class="edge-glow top-24 -left-72 size-[40rem] bg-magenta/12"></div>
+
+  <!-- In-game notification, slides in from the edge once the section is visible -->
+  <div
+    aria-hidden="true"
+    class="absolute top-28 right-0 hidden w-80 motion-safe:animate-slide-in xl:block"
+    style="animation-delay: 500ms"
+  >
+    <div class="flex items-start gap-3 rounded-l-panel border border-r-0 border-glass-border bg-ink-900/90 py-3 pr-6 pl-4 shadow-panel backdrop-blur-sm">
+      <span class="mt-1 h-9 w-1 shrink-0 rounded-full bg-fivem"></span>
+      <div>
+        <p class="text-sm font-bold text-fg">{fivem.notifyTitle}</p>
+        <p class="mt-0.5 text-sm text-fg-muted">{fivem.notifyBody}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <SectionHeading id="fivem-title">
+      {fivem.title}
+      <Fragment slot="lead">{fivem.lead}</Fragment>
+    </SectionHeading>
+
+    <div class="mt-8 flex flex-wrap items-center gap-2" data-reveal>
+      <span class="mr-2 text-sm text-fg-subtle">Works with</span>
+      {frameworks.map((f) => <Pill tone="accent">{f}</Pill>)}
+    </div>
+
+    <!-- Products, or the empty state while nothing is listed -->
+    {
+      products.length > 0 ? (
+        <div class="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" data-reveal-group>
+          {products.map((product) => (
+            <ProductCard product={product} />
+          ))}
+        </div>
+      ) : (
+        <div class="glass mt-14 grid items-center gap-8 p-6 sm:p-10 lg:grid-cols-[auto_1fr] lg:gap-12" data-reveal>
+          <ol aria-hidden="true" class="grid grid-cols-4 gap-2 sm:gap-3">
+            {[1, 2, 3, 4].map((n) => (
+              <li class:list={[
+                'relative grid size-16 place-items-center rounded-panel border sm:size-20',
+                n === 1 ? 'border-fivem/50 bg-fivem/8' : 'border-dashed border-glass-border-strong bg-ink-950/40',
+              ]}>
+                <span class="absolute top-1 left-1.5 text-[10px] font-semibold text-fg-subtle">{n}</span>
+                {n === 1 && <Icon name="package" class="size-7 text-fivem" />}
+              </li>
+            ))}
+          </ol>
+          <div>
+            <h3 class="text-2xl font-extrabold tracking-[-0.02em]">{fivem.emptyTitle}</h3>
+            <p class="mt-2 max-w-[48ch] text-fg-muted">{fivem.emptyBody}</p>
+            <Button url={site.discordUrl} icon="discord" class="mt-6">Join the Discord</Button>
+          </div>
+        </div>
+      )
+    }
+
+    <!-- What every script ships with -->
+    <ul class="mt-14 grid grid-cols-1 border-y border-glass-border sm:grid-cols-2 lg:grid-cols-4" role="list" data-reveal>
+      {
+        fivemCallouts.map((c, i) => (
+          <li class:list={[
+            'flex items-center gap-3 border-glass-border py-5 text-sm font-semibold text-fg sm:px-5',
+            i > 0 && 'border-t',
+            i === 1 && 'sm:border-t-0',
+            i === 2 && 'lg:border-t-0 lg:border-l',
+            i === 3 && 'lg:border-t-0',
+            i % 2 === 1 && 'sm:border-l',
+          ]}>
+            <Icon name="check" class="size-4 shrink-0 text-fivem" />
+            {c}
+          </li>
+        ))
+      }
+    </ul>
+
+    <!-- Custom work -->
+    <div
+      class="border-gradient mt-14 flex flex-col gap-6 rounded-card bg-ink-900/60 p-7 sm:p-10 md:flex-row md:items-center md:justify-between"
+      data-reveal
+    >
+      <div>
+        <h3 class="text-2xl font-extrabold tracking-[-0.02em] sm:text-3xl">{fivem.customTitle}</h3>
+        <p class="mt-2 max-w-[56ch] text-fg-muted">{fivem.customBody}</p>
+      </div>
+      <Button url={site.discordUrl} size="lg" icon="ticket" arrow magnetic>{fivem.customCta}</Button>
+    </div>
+  </div>
+</section>

@@ -74,6 +74,18 @@ export const site = {
     'Config-driven',
     'Free updates',
   ],
+  fivem: {
+    title: 'FiveM scripts that stay out of your resmon',
+    lead: 'Escrowed resources for roleplay servers, sold through Tebex and delivered straight to your Cfx.re account. Every script ships with readable configs and install docs.',
+    emptyTitle: 'First releases coming soon',
+    emptyBody: 'Join the Discord for early access and a say in what ships first.',
+    // In-game notification mockup (decorative)
+    notifyTitle: 'Outback Garage',
+    notifyBody: 'Vehicle stored at Legion Square.',
+    customTitle: 'Need something custom?',
+    customBody: 'Tell us what your server needs. We’ll scope it with you and send a fixed quote before any work starts.',
+    customCta: 'Open a ticket',
+  },
 
   // ── Feature flags ────────────────────────────────────────────────────────
   /** When true, the Work section fetches public repos at build time. */

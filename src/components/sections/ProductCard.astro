@@ -1,0 +1,71 @@
+---
+import type { Product } from '../../config/site';
+import { externalAttrs } from '../../lib/links';
+import Button from '../ui/Button.astro';
+import GlassCard from '../ui/GlassCard.astro';
+import Pill from '../ui/Pill.astro';
+
+interface Props {
+  product: Product;
+}
+const { product } = Astro.props;
+const isGif = product.previewVideo?.toLowerCase().endsWith('.gif');
+---
+
+<GlassCard
+  as="article"
+  class="tone-fivem group/card flex flex-col overflow-hidden transition-transform duration-300 ease-(--ease-out-expo) hover:-translate-y-1"
+  data-reveal
+>
+  <div class="relative aspect-video overflow-hidden bg-ink-900">
+    {
+      product.previewVideo && !isGif ? (
+        <video
+          class="size-full object-cover"
+          muted
+          loop
+          playsinline
+          preload="none"
+          poster={product.poster}
+          data-inview-play
+          aria-label={`Preview of ${product.name}`}
+        >
+          <source src={product.previewVideo} type={product.previewVideo.endsWith('.webm') ? 'video/webm' : 'video/mp4'} />
+        </video>
+      ) : product.previewVideo || product.poster ? (
+        <img
+          class="size-full object-cover"
+          src={product.previewVideo ?? product.poster}
+          alt={`Preview of ${product.name}`}
+          loading="lazy"
+          decoding="async"
+          width="640"
+          height="360"
+        />
+      ) : (
+        <div class="grid size-full place-items-center text-sm text-fg-subtle">Preview coming soon</div>
+      )
+    }
+  </div>
+
+  <div class="flex flex-1 flex-col p-5">
+    <div class="flex flex-wrap gap-1.5">
+      {product.framework.map((f) => <Pill>{f}</Pill>)}
+    </div>
+    <h3 class="mt-4 text-xl font-bold">{product.name}</h3>
+    <p class="mt-2 flex-1 text-sm leading-relaxed text-fg-muted">{product.description}</p>
+    <div class="mt-5 flex items-center justify-between gap-3">
+      <p class="font-display text-2xl font-extrabold">{product.price}</p>
+      <div class="flex items-center gap-3">
+        {
+          product.docsUrl && (
+            <a {...externalAttrs(product.docsUrl)} class="text-sm font-medium text-fg-muted underline-offset-4 hover:text-fg hover:underline">
+              Docs
+            </a>
+          )
+        }
+        <Button url={product.tebexUrl} icon="cart">Buy on Tebex</Button>
+      </div>
+    </div>
+  </div>
+</GlassCard>

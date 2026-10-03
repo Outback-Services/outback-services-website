@@ -1,0 +1,15 @@
+---
+/** Dark glass card with hover inner glow and (pointer-only) cursor spotlight. */
+interface Props {
+  as?: 'div' | 'article' | 'li';
+  class?: string;
+  spotlight?: boolean;
+  [key: `data-${string}`]: unknown;
+}
+const { as: Tag = 'div', class: className = '', spotlight = true, ...rest } = Astro.props;
+---
+
+<Tag class:list={['glass glow-card', spotlight && 'spotlight', className]} data-spotlight={spotlight ? '' : undefined} {...rest}>
+  {spotlight && <span class="spotlight-blob" aria-hidden="true" />}
+  <slot />
+</Tag>

@@ -1,0 +1,24 @@
+---
+/** Tagline + H2 + optional lead. Use slot "highlight" for gradient key words. */
+interface Props {
+  tagline: string;
+  id?: string;
+  align?: 'left' | 'center';
+  class?: string;
+}
+const { tagline, id, align = 'left', class: className = '' } = Astro.props;
+---
+
+<div class:list={[align === 'center' && 'mx-auto text-center', 'max-w-3xl', className]} data-reveal>
+  <p class="tagline">{tagline}</p>
+  <h2 id={id} class="mt-4 text-4xl leading-[1.05] font-extrabold sm:text-5xl">
+    <slot /><span class="text-gradient"><slot name="highlight" /></span>
+  </h2>
+  {
+    Astro.slots.has('lead') && (
+      <p class="mt-5 text-lg text-fg-muted">
+        <slot name="lead" />
+      </p>
+    )
+  }
+</div>

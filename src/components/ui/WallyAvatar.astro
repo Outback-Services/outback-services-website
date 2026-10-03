@@ -1,0 +1,78 @@
+---
+/**
+ * Renders the supplied Wally avatar from its generated variants.
+ * If public/brand/wally-avatar.png is missing, renders a clearly labelled
+ * placeholder circle instead. Never draws a replacement mascot.
+ */
+import { brand, wallySrc, wallySrcset } from '../../lib/brand';
+
+interface Props {
+  /** CSS width of the rendered avatar, used for `sizes`. */
+  sizes?: string;
+  class?: string;
+  /** LCP image: eager + high fetch priority. */
+  priority?: boolean;
+  /** Decorative uses (Discord mockups) hide the alt text. */
+  decorative?: boolean;
+  /** Compact placeholder (no path text) for small avatars in mockups. */
+  compact?: boolean;
+}
+
+const {
+  sizes = '(min-width: 1024px) 420px, 280px',
+  class: className = '',
+  priority = false,
+  decorative = false,
+  compact = false,
+} = Astro.props;
+
+const alt = decorative ? '' : 'Wally, the Outback Services kangaroo mascot, wearing a black hoodie';
+---
+
+{
+  brand.hasWally ? (
+    <picture class:list={['block aspect-square', className]}>
+      <source type="image/avif" srcset={wallySrcset('avif')} sizes={sizes} />
+      <source type="image/webp" srcset={wallySrcset('webp')} sizes={sizes} />
+      <img
+        src={wallySrc(512)}
+        alt={alt}
+        width="768"
+        height="768"
+        loading={priority ? 'eager' : 'lazy'}
+        decoding={priority ? 'sync' : 'async'}
+        fetchpriority={priority ? 'high' : 'auto'}
+        class="size-full object-contain"
+      />
+    </picture>
+  ) : compact ? (
+    <span
+      aria-hidden="true"
+      title="Wally avatar placeholder"
+      class:list={[
+        'grid aspect-square place-items-center rounded-full border border-dashed border-glass-border-strong bg-ink-700 font-display text-[0.6rem] font-extrabold text-fg-muted',
+        className,
+      ]}
+    >
+      W?
+    </span>
+  ) : (
+    <div
+      role={decorative ? undefined : 'img'}
+      aria-label={decorative ? undefined : 'Wally avatar placeholder'}
+      aria-hidden={decorative ? 'true' : undefined}
+      class:list={[
+        'relative grid aspect-square place-items-center rounded-full border-2 border-dashed border-glass-border-strong bg-ink-800 text-center',
+        className,
+      ]}
+      style="container-type: inline-size"
+    >
+      <span class="px-[12%] font-mono text-[clamp(0.55rem,4.5cqi,0.85rem)] leading-snug text-fg-muted">
+        <span class="mb-1 block font-sans font-semibold tracking-[0.2em] text-cyan uppercase">Placeholder</span>
+        Wally avatar — add
+        <br />
+        /public/brand/wally-avatar.png
+      </span>
+    </div>
+  )
+}

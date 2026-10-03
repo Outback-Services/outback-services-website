@@ -1,0 +1,24 @@
+---
+/** Four-point sparkle star. Twinkles unless `still`; delay staggers groups. */
+interface Props {
+  class?: string;
+  /** Token color class, e.g. text-cyan. */
+  color?: string;
+  delay?: number;
+  still?: boolean;
+}
+const { class: className = 'size-4', color = 'text-fg', delay = 0, still = false } = Astro.props;
+---
+
+<svg
+  viewBox="0 0 24 24"
+  aria-hidden="true"
+  focusable="false"
+  class:list={['pointer-events-none', color, !still && 'motion-safe:animate-twinkle', className]}
+  style={`animation-delay: ${delay}ms`}
+>
+  <path
+    fill="currentColor"
+    d="M12 0c.6 6.4 5.6 11.4 12 12-6.4.6-11.4 5.6-12 12-.6-6.4-5.6-11.4-12-12C6.4 11.4 11.4 6.4 12 0Z"
+  ></path>
+</svg>

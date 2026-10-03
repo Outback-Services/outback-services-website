@@ -1,0 +1,347 @@
+@import "tailwindcss";
+
+/* ──────────────────────────────────────────────────────────────────────────
+   Design tokens. This @theme block is the Tailwind v4 config: every utility
+   (bg-ink-950, text-cyan, font-display, shadow-glow-magenta, animate-float…)
+   is generated from it. Components must use these, never raw hex values.
+   ────────────────────────────────────────────────────────────────────────── */
+@theme {
+  /* Palette is closed: only brand tokens exist. */
+  --color-*: initial;
+  --color-white: #ffffff;
+  --color-black: #000000;
+
+  --color-ink-950: #07070f;
+  --color-ink-900: #0d0b1a;
+  --color-ink-800: #151228;
+  --color-ink-700: #1f1a3a;
+
+  --color-magenta: #ff2bd6;
+  --color-violet: #9b5cff;
+  --color-cyan: #22d3ee;
+
+  /* Text tiers, all ≥ 4.5:1 on ink-950 / ink-900 / glass. */
+  --color-fg: #f4f3ff;
+  --color-fg-muted: rgb(244 243 255 / 0.74);
+  --color-fg-subtle: rgb(244 243 255 / 0.6);
+
+  /* Glass surfaces */
+  --color-glass: rgb(255 255 255 / 0.04);
+  --color-glass-strong: rgb(255 255 255 / 0.07);
+  --color-glass-border: rgb(255 255 255 / 0.1);
+  --color-glass-border-strong: rgb(255 255 255 / 0.18);
+
+  /* Faux Discord UI */
+  --color-blurple: #5865f2;
+  --color-online: #23a55a;
+
+  /* Type */
+  --font-display: "Outfit Variable", ui-rounded, "SF Pro Rounded", system-ui, sans-serif;
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SFMono-Regular", "Cascadia Code", Menlo, monospace;
+  --tracking-tagline: 0.3em;
+
+  /* Depth */
+  --shadow-glow-magenta: 0 0 48px -10px rgb(255 43 214 / 0.6);
+  --shadow-glow-violet: 0 0 48px -10px rgb(155 92 255 / 0.6);
+  --shadow-glow-cyan: 0 0 48px -10px rgb(34 211 238 / 0.55);
+  --shadow-panel: 0 24px 60px -20px rgb(0 0 0 / 0.7);
+
+  /* Motion */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --animate-shimmer: shimmer 7s var(--ease-out-expo) infinite;
+  --animate-twinkle: twinkle 3.2s ease-in-out infinite;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-bob: bob 5s ease-in-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-orbit: spin 14s linear infinite;
+  --animate-draw: draw 1.6s var(--ease-out-expo) both;
+  --animate-slide-in: slide-in 0.9s var(--ease-out-expo) both;
+
+  @keyframes shimmer {
+    0% { transform: translateX(-150%) skewX(-20deg); }
+    45%, 100% { transform: translateX(350%) skewX(-20deg); }
+  }
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.25; transform: scale(0.6) rotate(0deg); }
+    50% { opacity: 1; transform: scale(1) rotate(45deg); }
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-14px); }
+  }
+  @keyframes bob {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  /* The one non-transform animation, requested explicitly: SVG streak draw-on. */
+  @keyframes draw {
+    from { stroke-dashoffset: var(--dash, 1000); opacity: 0; }
+    to { stroke-dashoffset: 0; opacity: 1; }
+  }
+  @keyframes slide-in {
+    from { transform: translateX(110%); opacity: 0; }
+    to { transform: translateX(0); opacity: 1; }
+  }
+}
+
+/* Non-namespaced brand values (gradients) */
+:root {
+  --gradient-brand: linear-gradient(
+    100deg,
+    var(--color-magenta) 0%,
+    var(--color-violet) 50%,
+    var(--color-cyan) 100%
+  );
+  --gradient-brand-soft: linear-gradient(
+    100deg,
+    rgb(255 43 214 / 0.18),
+    rgb(155 92 255 / 0.18),
+    rgb(34 211 238 / 0.18)
+  );
+  --nav-height: 4.5rem;
+  color-scheme: dark;
+}
+
+/* ── Base ─────────────────────────────────────────────────────────────── */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--nav-height) + 1rem);
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+
+  body {
+    background-color: var(--color-ink-950);
+    color: var(--color-fg);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    overflow-x: clip;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background: rgb(255 43 214 / 0.35);
+    color: var(--color-white);
+  }
+
+  /* Cyan focus rings everywhere, keyboard only */
+  :focus-visible {
+    outline: 2px solid var(--color-cyan);
+    outline-offset: 3px;
+    border-radius: 0.5rem;
+  }
+}
+
+/* ── Utilities ────────────────────────────────────────────────────────── */
+
+/* Gradient text with a solid fallback where background-clip:text is unsupported. */
+@utility text-gradient {
+  color: var(--color-cyan);
+  @supports ((-webkit-background-clip: text) or (background-clip: text)) {
+    background-image: var(--gradient-brand);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+  /* Forced-colors (Windows high contrast): drop the gradient entirely. */
+  @media (forced-colors: active) {
+    background: none;
+    -webkit-text-fill-color: currentColor;
+    color: CanvasText;
+  }
+}
+
+/* Wide-tracked uppercase tagline */
+@utility tagline {
+  font-family: var(--font-sans);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: var(--tracking-tagline);
+  text-transform: uppercase;
+  color: var(--color-fg-muted);
+}
+
+/* Dark glass surface */
+@utility glass {
+  background-color: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: var(--radius-2xl);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  backdrop-filter: blur(16px) saturate(140%);
+}
+
+/* Gradient hairline border via mask, for accent cards and the primary CTA. */
+@utility border-gradient {
+  position: relative;
+  &::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: var(--gradient-brand);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+  }
+}
+
+/* ── Components ───────────────────────────────────────────────────────── */
+@layer components {
+  /* Shimmer: a soft light band swept across gradient text with transform only.
+     `overlay` brightens the bright glyphs and leaves the near-black page
+     background visually unchanged. */
+  .shimmer {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.08em; /* keep descenders inside the clip */
+  }
+  .shimmer::after {
+    content: "";
+    position: absolute;
+    inset: -10% auto -10% 0;
+    width: 35%;
+    background: linear-gradient(90deg, transparent, rgb(255 255 255 / 0.7), transparent);
+    mix-blend-mode: overlay;
+    transform: translateX(-150%) skewX(-20deg);
+    pointer-events: none;
+  }
+
+  /* Hover inner glow for glass cards: opacity-only transition on a pseudo. */
+  .glow-card {
+    position: relative;
+    isolation: isolate;
+  }
+  .glow-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow:
+      inset 0 0 0 1px var(--color-glass-border-strong),
+      inset 0 0 40px -12px rgb(155 92 255 / 0.55);
+    opacity: 0;
+    transition: opacity 0.4s var(--ease-out-expo);
+    pointer-events: none;
+    z-index: -1;
+  }
+  .glow-card:hover::before,
+  .glow-card:focus-within::before {
+    opacity: 1;
+  }
+
+  /* Cursor spotlight: a blob translated with transform (set by JS). */
+  .spotlight {
+    overflow: hidden;
+  }
+  .spotlight-blob {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 22rem;
+    height: 22rem;
+    margin: -11rem 0 0 -11rem;
+    border-radius: 9999px;
+    background: radial-gradient(circle, rgb(155 92 255 / 0.18), transparent 65%);
+    opacity: 0;
+    transition: opacity 0.35s ease;
+    pointer-events: none;
+    z-index: -1;
+    will-change: transform;
+  }
+  .spotlight:hover .spotlight-blob {
+    opacity: 1;
+  }
+
+  /* CTA arrow nudge */
+  .cta-arrow {
+    transition: transform 0.35s var(--ease-out-expo);
+  }
+  .group:hover .cta-arrow,
+  .group:focus-visible .cta-arrow {
+    transform: translateX(4px);
+  }
+
+  /* CTA glow layer: opacity-only intensify on hover */
+  .cta-glow {
+    position: absolute;
+    inset: -6px;
+    border-radius: inherit;
+    background: var(--gradient-brand);
+    filter: blur(18px);
+    opacity: 0.35;
+    transition: opacity 0.35s var(--ease-out-expo);
+    z-index: -1;
+    pointer-events: none;
+  }
+  .group:hover .cta-glow,
+  .group:focus-visible .cta-glow {
+    opacity: 0.75;
+  }
+
+  /* Edge glows used as section backdrops (static, no animation). */
+  .edge-glow {
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(90px);
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+/* ── Motion, gated on user preference ─────────────────────────────────── */
+@media (prefers-reduced-motion: no-preference) {
+  .shimmer::after { animation: var(--animate-shimmer); }
+
+  /* Scroll reveal, only once JS is confirmed running (html.js). */
+  html.js [data-reveal] {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.7s var(--ease-out-expo),
+      transform 0.7s var(--ease-out-expo);
+    transition-delay: var(--reveal-delay, 0ms);
+  }
+  html.js [data-reveal].is-revealed {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Pause every CSS loop inside a scope that is off-screen. */
+[data-anim-scope]:not([data-inview]) *,
+[data-anim-scope]:not([data-inview]) *::before,
+[data-anim-scope]:not([data-inview]) *::after {
+  animation-play-state: paused !important;
+}
+
+/* Hard stop for reduced motion: final states only, no loops. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+  }
+}

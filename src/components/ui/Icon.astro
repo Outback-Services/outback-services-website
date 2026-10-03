@@ -1,0 +1,73 @@
+---
+/**
+ * Build-time inline SVG icons. Lucide for UI glyphs, Simple Icons for brands.
+ * Nothing ships to the client but the SVG markup.
+ */
+import * as lucide from 'lucide-static';
+import { siDiscord, siGithub } from 'simple-icons';
+
+const map = {
+  'arrow-right': lucide.ArrowRight,
+  gauge: lucide.Gauge,
+  sliders: lucide.SlidersHorizontal,
+  book: lucide.BookOpen,
+  chat: lucide.MessagesSquare,
+  clipboard: lucide.ClipboardList,
+  shield: lucide.ShieldCheck,
+  cart: lucide.ShoppingCart,
+  signal: lucide.Activity,
+  scroll: lucide.ScrollText,
+  check: lucide.Check,
+  menu: lucide.Menu,
+  x: lucide.X,
+  store: lucide.Store,
+  sparkles: lucide.Sparkles,
+  ticket: lucide.Ticket,
+  code: lucide.Code,
+  star: lucide.Star,
+  gift: lucide.Gift,
+  wrench: lucide.Wrench,
+  hammer: lucide.Hammer,
+  flask: lucide.FlaskConical,
+  package: lucide.PackageCheck,
+  'message-plus': lucide.MessageSquarePlus,
+  bell: lucide.Bell,
+  lock: lucide.Lock,
+  zap: lucide.Zap,
+  settings: lucide.Settings2,
+  refresh: lucide.RefreshCw,
+  hash: lucide.Hash,
+  smile: lucide.Smile,
+  'chevron-down': lucide.ChevronDown,
+  party: lucide.PartyPopper,
+  users: lucide.Users,
+  bot: lucide.Bot,
+} as const;
+
+const brands = { discord: siDiscord, github: siGithub } as const;
+
+export type IconName = keyof typeof map | keyof typeof brands;
+
+interface Props {
+  name: IconName;
+  class?: string;
+  /** Accessible label. Omit for decorative icons (default). */
+  label?: string;
+}
+
+const { name, class: className = 'size-5', label } = Astro.props;
+const a11y = label ? `role="img" aria-label="${label}"` : 'aria-hidden="true" focusable="false"';
+
+let svg: string;
+if (name in brands) {
+  const icon = brands[name as keyof typeof brands];
+  svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="${className}" ${a11y}><path d="${icon.path}"/></svg>`;
+} else {
+  svg = map[name as keyof typeof map]
+    .replace(/class="[^"]*"/, `class="${className}"`)
+    .replace('<svg', `<svg ${a11y}`)
+    .replace(/\s(width|height)="24"/g, '');
+}
+---
+
+<Fragment set:html={svg} />

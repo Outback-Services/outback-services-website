@@ -1,0 +1,120 @@
+---
+/**
+ * TEMPORARY design-token preview for checkpoint 1.
+ * Delete before launch (excluded from the sitemap via noindex + filter).
+ */
+import Base from '../layouts/Base.astro';
+import Button from '../components/ui/Button.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
+import Icon from '../components/ui/Icon.astro';
+import Pill from '../components/ui/Pill.astro';
+import Sparkle from '../components/ui/Sparkle.astro';
+import WallyAvatar from '../components/ui/WallyAvatar.astro';
+import { site } from '../config/site';
+
+const swatches = [
+  { name: 'ink-950', cls: 'bg-ink-950' },
+  { name: 'ink-900', cls: 'bg-ink-900' },
+  { name: 'ink-800', cls: 'bg-ink-800' },
+  { name: 'ink-700', cls: 'bg-ink-700' },
+  { name: 'magenta', cls: 'bg-magenta' },
+  { name: 'violet', cls: 'bg-violet' },
+  { name: 'cyan', cls: 'bg-cyan' },
+  { name: 'blurple', cls: 'bg-blurple' },
+  { name: 'glass', cls: 'bg-glass' },
+  { name: 'glass-strong', cls: 'bg-glass-strong' },
+];
+---
+
+<Base title="Design tokens — Outback Services" noindex>
+  <main id="main" class="relative isolate mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="edge-glow -left-40 -top-40 size-[34rem] bg-magenta/25"></div>
+    <div class="edge-glow -right-40 top-[30rem] size-[34rem] bg-cyan/20"></div>
+
+    <p class="tagline">Checkpoint 1 · Design tokens</p>
+    <h1 class="mt-4 text-5xl font-black sm:text-7xl">
+      <span class="text-gradient shimmer">Outback</span> Services
+    </h1>
+    <p class="mt-4 max-w-2xl text-lg text-fg-muted">
+      Temporary page. Every color, font and effect below comes from the <code class="font-mono text-cyan">@theme</code> block in{' '}
+      <code class="font-mono text-cyan">src/styles/global.css</code>.
+    </p>
+
+    <!-- Colors -->
+    <section class="mt-16" aria-labelledby="t-colors">
+      <h2 id="t-colors" class="text-2xl font-extrabold">Palette</h2>
+      <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-5">
+        {
+          swatches.map((s) => (
+            <div>
+              <div class:list={['h-20 rounded-2xl border border-glass-border', s.cls]} />
+              <p class="mt-2 font-mono text-xs text-fg-muted">{s.name}</p>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-4 h-14 rounded-2xl" style="background: var(--gradient-brand)"></div>
+      <p class="mt-2 font-mono text-xs text-fg-muted">--gradient-brand (magenta → violet → cyan)</p>
+    </section>
+
+    <!-- Type -->
+    <section class="mt-16" aria-labelledby="t-type">
+      <h2 id="t-type" class="text-2xl font-extrabold">Type</h2>
+      <div class="mt-6 space-y-5">
+        <p class="tagline">Wide-tracked tagline · <span class="text-gradient">gradient key word</span></p>
+        <p class="font-display text-6xl leading-none font-black">Display 900</p>
+        <p class="font-display text-5xl leading-none font-extrabold">Display 800 — <span class="text-gradient">built properly.</span></p>
+        <p class="font-display text-3xl font-bold">Display 700 subheading</p>
+        <p class="max-w-2xl text-lg text-fg">Body Inter, fg. Escrowed resources and bespoke bots for roleplay communities.</p>
+        <p class="max-w-2xl text-fg-muted">Body Inter, fg-muted. Used for leads and card copy.</p>
+        <p class="max-w-2xl text-sm text-fg-subtle">Body Inter, fg-subtle. Captions and fine print.</p>
+      </div>
+    </section>
+
+    <!-- Buttons & pills -->
+    <section class="mt-16" aria-labelledby="t-actions">
+      <h2 id="t-actions" class="text-2xl font-extrabold">Actions</h2>
+      <div class="mt-6 flex flex-wrap items-center gap-4">
+        <Button url={site.discordUrl} size="lg" icon="discord" arrow magnetic>Join the Discord</Button>
+        <Button url={site.tebexUrl} size="lg" variant="ghost" icon="store">Browse scripts</Button>
+        <Button url={site.githubUrl} variant="ghost" icon="github">GitHub</Button>
+      </div>
+      <div class="mt-6 flex flex-wrap gap-2">
+        {site.frameworks.map((f) => <Pill tone="accent">{f}</Pill>)}
+        {site.wallyFeatures.map((f) => <Pill icon="check">{f}</Pill>)}
+      </div>
+    </section>
+
+    <!-- Surfaces -->
+    <section class="mt-16" aria-labelledby="t-surfaces">
+      <h2 id="t-surfaces" class="text-2xl font-extrabold">Surfaces & motifs</h2>
+      <div class="mt-6 grid gap-6 md:grid-cols-3">
+        <GlassCard class="p-6">
+          <Icon name="gauge" class="size-6 text-cyan" />
+          <h3 class="mt-4 text-xl font-bold">Glass card</h3>
+          <p class="mt-2 text-sm text-fg-muted">white/4% bg, white/10% border, blur, rounded-2xl. Hover for inner glow + spotlight.</p>
+        </GlassCard>
+        <GlassCard class="border-gradient p-6">
+          <Icon name="sparkles" class="size-6 text-magenta" />
+          <h3 class="mt-4 text-xl font-bold">Gradient hairline</h3>
+          <p class="mt-2 text-sm text-fg-muted">Accent variant for featured cards and banners.</p>
+        </GlassCard>
+        <GlassCard class="flex items-center justify-center gap-6 p-6">
+          <Sparkle class="size-8" color="text-cyan" />
+          <Sparkle class="size-5" color="text-magenta" delay={600} />
+          <Sparkle class="size-10" color="text-violet" delay={1200} />
+        </GlassCard>
+      </div>
+      <div class="mt-10 flex flex-wrap items-end gap-10">
+        <div class="w-64">
+          <WallyAvatar />
+          <p class="mt-2 text-center font-mono text-xs text-fg-muted">WallyAvatar (hero)</p>
+        </div>
+        <div class="w-10">
+          <WallyAvatar compact decorative />
+          <p class="mt-2 text-center font-mono text-xs text-fg-muted">compact</p>
+        </div>
+      </div>
+    </section>
+  </main>
+</Base>

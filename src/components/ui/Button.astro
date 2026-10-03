@@ -1,0 +1,65 @@
+---
+import type { HTMLAttributes } from 'astro/types';
+import { externalAttrs } from '../../lib/links';
+import Icon, { type IconName } from './Icon.astro';
+
+interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
+  /** Raw config URL; placeholders resolve to "#". */
+  url: string;
+  variant?: 'primary' | 'ghost';
+  size?: 'md' | 'lg';
+  icon?: IconName;
+  /** Show the trailing arrow that nudges right on hover. */
+  arrow?: boolean;
+  /** Magnetic pull toward the cursor (pointer devices only). */
+  magnetic?: boolean;
+}
+
+const {
+  url,
+  variant = 'primary',
+  size = 'md',
+  icon,
+  arrow = false,
+  magnetic = false,
+  class: className = '',
+  ...rest
+} = Astro.props;
+
+const sizes = {
+  md: 'h-11 px-5 text-sm gap-2',
+  lg: 'h-13 px-7 text-base gap-2.5',
+};
+const variants = {
+  // Ink text on the gradient keeps ≥ 5:1 contrast across all three stops.
+  primary: 'text-ink-950 font-semibold',
+  ghost: 'glass text-fg font-medium hover:bg-glass-strong hover:border-glass-border-strong',
+};
+---
+
+<a
+  {...externalAttrs(url)}
+  {...rest}
+  data-magnetic={magnetic ? '' : undefined}
+  class:list={[
+    'group relative isolate inline-flex shrink-0 items-center justify-center rounded-full whitespace-nowrap',
+    'transition-[background-color,border-color] duration-300',
+    sizes[size],
+    variants[variant],
+    className,
+  ]}
+>
+  {
+    variant === 'primary' && (
+      <>
+        <span class="cta-glow" aria-hidden="true" />
+        <span class="absolute inset-0 -z-10 rounded-full" style="background: var(--gradient-brand)" aria-hidden="true" />
+      </>
+    )
+  }
+  <span class="magnetic-inner inline-flex items-center gap-[inherit]">
+    {icon && <Icon name={icon} class="size-[1.15em]" />}
+    <slot />
+    {arrow && <Icon name="arrow-right" class="cta-arrow size-[1.1em]" />}
+  </span>
+</a>

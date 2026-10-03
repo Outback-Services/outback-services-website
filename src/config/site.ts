@@ -57,10 +57,10 @@ export const site = {
 
   // ── Links ────────────────────────────────────────────────────────────────
   siteUrl: 'https://outbackdev.com',
-  discordUrl: '{{DISCORD_INVITE_URL}}',
-  wallyInviteUrl: '{{WALLY_OAUTH_INVITE_URL}}',
-  tebexUrl: '{{TEBEX_STORE_URL}}',
-  tebexRefundPolicyUrl: '{{TEBEX_REFUND_POLICY_URL}}',
+  discordUrl: 'https://discord.gg/outback',
+  wallyInviteUrl: 'https://discord.com/oauth2/authorize?client_id=1553018928219824278',
+  tebexUrl: 'https://discord.gg/outback',
+  tebexRefundPolicyUrl: 'https://discord.com/channels/1555560577194004523/1555811122479763476',
   githubUrl: 'https://github.com/outback-services',
   githubOrg: 'outback-services',
 

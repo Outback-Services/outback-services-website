@@ -1,120 +1,132 @@
 ---
 /**
- * TEMPORARY design-token preview for checkpoint 1.
- * Delete before launch (excluded from the sitemap via noindex + filter).
+ * TEMPORARY design-token specimen for checkpoint 1.
+ * Delete before launch (noindex, and filtered out of the sitemap).
  */
 import Base from '../layouts/Base.astro';
 import Button from '../components/ui/Button.astro';
 import GlassCard from '../components/ui/GlassCard.astro';
-import Icon from '../components/ui/Icon.astro';
+import NeonUnderline from '../components/ui/NeonUnderline.astro';
 import Pill from '../components/ui/Pill.astro';
 import Sparkle from '../components/ui/Sparkle.astro';
 import WallyAvatar from '../components/ui/WallyAvatar.astro';
 import { site } from '../config/site';
 
-const swatches = [
-  { name: 'ink-950', cls: 'bg-ink-950' },
-  { name: 'ink-900', cls: 'bg-ink-900' },
-  { name: 'ink-800', cls: 'bg-ink-800' },
-  { name: 'ink-700', cls: 'bg-ink-700' },
-  { name: 'magenta', cls: 'bg-magenta' },
-  { name: 'violet', cls: 'bg-violet' },
-  { name: 'cyan', cls: 'bg-cyan' },
-  { name: 'blurple', cls: 'bg-blurple' },
-  { name: 'glass', cls: 'bg-glass' },
-  { name: 'glass-strong', cls: 'bg-glass-strong' },
+const roles = [
+  { tone: 'tone-fivem', bg: 'bg-fivem', name: 'Magenta', job: 'FiveM scripts', note: 'Product cards, framework tags, the in-game notification.' },
+  { tone: 'tone-bots', bg: 'bg-bots', name: 'Cyan', job: 'Custom Discord bots', note: 'Bot use cases, links and keyboard focus rings.' },
+  { tone: 'tone-wally', bg: 'bg-wally', name: 'Violet', job: 'Wally', note: 'The free bot, its chat demo and feature list.' },
 ];
+const inks = ['bg-ink-950', 'bg-ink-900', 'bg-ink-800', 'bg-ink-700'];
 ---
 
-<Base title="Design tokens — Outback Services" noindex>
-  <main id="main" class="relative isolate mx-auto max-w-6xl px-4 py-16 sm:px-6 lg:px-8">
-    <div class="edge-glow -left-40 -top-40 size-[34rem] bg-magenta/25"></div>
-    <div class="edge-glow -right-40 top-[30rem] size-[34rem] bg-cyan/20"></div>
+<Base title="Design tokens | Outback Services" noindex>
+  <main id="main" class="relative isolate mx-auto max-w-6xl px-4 pt-14 pb-24 sm:px-6 lg:px-8">
+    <div class="edge-glow -top-56 -left-56 size-[38rem] bg-magenta/20"></div>
 
-    <p class="tagline">Checkpoint 1 · Design tokens</p>
-    <h1 class="mt-4 text-5xl font-black sm:text-7xl">
-      <span class="text-gradient shimmer">Outback</span> Services
+    <p class="text-sm text-fg-subtle">Design tokens, checkpoint 1. Temporary page.</p>
+
+    <!-- Wordmark: the one place the gradient sits on text -->
+    <h1 class="mt-10 font-display text-6xl leading-[0.9] font-black tracking-[-0.035em] sm:text-8xl">
+      <span class="text-gradient shimmer">Outback</span><br />Services
     </h1>
-    <p class="mt-4 max-w-2xl text-lg text-fg-muted">
-      Temporary page. Every color, font and effect below comes from the <code class="font-mono text-cyan">@theme</code> block in{' '}
-      <code class="font-mono text-cyan">src/styles/global.css</code>.
-    </p>
+    <p class="tagline mt-6">{site.hero.tagline}</p>
 
-    <!-- Colors -->
-    <section class="mt-16" aria-labelledby="t-colors">
-      <h2 id="t-colors" class="text-2xl font-extrabold">Palette</h2>
-      <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-5">
+    <!-- Headline specimen -->
+    <section class="mt-24 grid gap-10 lg:grid-cols-[1.4fr_1fr] lg:items-end" aria-labelledby="t-type">
+      <div>
+        <h2 id="t-type" class="sr-only">Type</h2>
+        <p class="font-display text-5xl leading-[1.02] font-extrabold tracking-[-0.03em] sm:text-6xl">
+          FiveM scripts &amp; Discord bots, <NeonUnderline>built properly.</NeonUnderline>
+        </p>
+        <p class="mt-8 max-w-[58ch] text-lg leading-relaxed text-fg-muted">{site.hero.subline}</p>
+        <div class="mt-9 flex flex-wrap gap-3">
+          <Button url={site.discordUrl} size="lg" icon="discord" arrow magnetic>Join the Discord</Button>
+          <Button url={site.tebexUrl} size="lg" variant="ghost">Browse scripts</Button>
+        </div>
+      </div>
+      <dl class="grid grid-cols-[auto_1fr] gap-x-6 gap-y-3 text-sm">
+        <dt class="text-fg-subtle">Display</dt>
+        <dd>Outfit, 800 and 900, tight tracking</dd>
+        <dt class="text-fg-subtle">Body</dt>
+        <dd>Inter, 400 to 600, 1.6 line height</dd>
+        <dt class="text-fg-subtle">Tagline</dt>
+        <dd>Inter 600, caps, 0.3em. Used once, in the hero.</dd>
+        <dt class="text-fg-subtle">Gradient</dt>
+        <dd>Wordmark, primary button and neon strokes only</dd>
+      </dl>
+    </section>
+
+    <!-- Color roles -->
+    <section class="mt-28" aria-labelledby="t-colors">
+      <h2 id="t-colors" class="text-3xl font-extrabold tracking-[-0.02em]">Each color has a job</h2>
+      <div class="mt-8 grid gap-4 md:grid-cols-3">
         {
-          swatches.map((s) => (
-            <div>
-              <div class:list={['h-20 rounded-2xl border border-glass-border', s.cls]} />
-              <p class="mt-2 font-mono text-xs text-fg-muted">{s.name}</p>
-            </div>
+          roles.map((r) => (
+            <GlassCard class:list={[r.tone, 'p-6']}>
+              <div class:list={['h-1.5 w-16 rounded-full', r.bg]} />
+              <h3 class="mt-6 text-xl font-bold">{r.job}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-fg-muted">
+                {r.name}. {r.note}
+              </p>
+            </GlassCard>
           ))
         }
       </div>
-      <div class="mt-4 h-14 rounded-2xl" style="background: var(--gradient-brand)"></div>
-      <p class="mt-2 font-mono text-xs text-fg-muted">--gradient-brand (magenta → violet → cyan)</p>
-    </section>
-
-    <!-- Type -->
-    <section class="mt-16" aria-labelledby="t-type">
-      <h2 id="t-type" class="text-2xl font-extrabold">Type</h2>
-      <div class="mt-6 space-y-5">
-        <p class="tagline">Wide-tracked tagline · <span class="text-gradient">gradient key word</span></p>
-        <p class="font-display text-6xl leading-none font-black">Display 900</p>
-        <p class="font-display text-5xl leading-none font-extrabold">Display 800 — <span class="text-gradient">built properly.</span></p>
-        <p class="font-display text-3xl font-bold">Display 700 subheading</p>
-        <p class="max-w-2xl text-lg text-fg">Body Inter, fg. Escrowed resources and bespoke bots for roleplay communities.</p>
-        <p class="max-w-2xl text-fg-muted">Body Inter, fg-muted. Used for leads and card copy.</p>
-        <p class="max-w-2xl text-sm text-fg-subtle">Body Inter, fg-subtle. Captions and fine print.</p>
+      <div class="mt-6 flex items-center gap-3">
+        {inks.map((c) => <span class:list={['size-9 rounded-panel border border-glass-border', c]} />)}
+        <span class="ml-2 text-sm text-fg-subtle">Ink backgrounds, darkest to lightest</span>
       </div>
     </section>
 
-    <!-- Buttons & pills -->
-    <section class="mt-16" aria-labelledby="t-actions">
-      <h2 id="t-actions" class="text-2xl font-extrabold">Actions</h2>
-      <div class="mt-6 flex flex-wrap items-center gap-4">
-        <Button url={site.discordUrl} size="lg" icon="discord" arrow magnetic>Join the Discord</Button>
-        <Button url={site.tebexUrl} size="lg" variant="ghost" icon="store">Browse scripts</Button>
-        <Button url={site.githubUrl} variant="ghost" icon="github">GitHub</Button>
-      </div>
-      <div class="mt-6 flex flex-wrap gap-2">
-        {site.frameworks.map((f) => <Pill tone="accent">{f}</Pill>)}
-        {site.wallyFeatures.map((f) => <Pill icon="check">{f}</Pill>)}
-      </div>
-    </section>
-
-    <!-- Surfaces -->
-    <section class="mt-16" aria-labelledby="t-surfaces">
-      <h2 id="t-surfaces" class="text-2xl font-extrabold">Surfaces & motifs</h2>
-      <div class="mt-6 grid gap-6 md:grid-cols-3">
-        <GlassCard class="p-6">
-          <Icon name="gauge" class="size-6 text-cyan" />
-          <h3 class="mt-4 text-xl font-bold">Glass card</h3>
-          <p class="mt-2 text-sm text-fg-muted">white/4% bg, white/10% border, blur, rounded-2xl. Hover for inner glow + spotlight.</p>
-        </GlassCard>
-        <GlassCard class="border-gradient p-6">
-          <Icon name="sparkles" class="size-6 text-magenta" />
-          <h3 class="mt-4 text-xl font-bold">Gradient hairline</h3>
-          <p class="mt-2 text-sm text-fg-muted">Accent variant for featured cards and banners.</p>
-        </GlassCard>
-        <GlassCard class="flex items-center justify-center gap-6 p-6">
-          <Sparkle class="size-8" color="text-cyan" />
-          <Sparkle class="size-5" color="text-magenta" delay={600} />
-          <Sparkle class="size-10" color="text-violet" delay={1200} />
-        </GlassCard>
-      </div>
-      <div class="mt-10 flex flex-wrap items-end gap-10">
-        <div class="w-64">
-          <WallyAvatar />
-          <p class="mt-2 text-center font-mono text-xs text-fg-muted">WallyAvatar (hero)</p>
+    <!-- Surfaces by role -->
+    <section class="mt-28" aria-labelledby="t-surfaces">
+      <h2 id="t-surfaces" class="text-3xl font-extrabold tracking-[-0.02em]">Surfaces get their corners from their role</h2>
+      <div class="mt-8 grid items-start gap-6 md:grid-cols-[1fr_1fr]">
+        <!-- Discord panel: tight 8px corners like the real client -->
+        <div class="rounded-panel border border-glass-border bg-ink-800 p-4 shadow-panel">
+          <div class="flex items-center gap-3">
+            <WallyAvatar compact decorative class="size-10" />
+            <div>
+              <p class="flex items-center gap-1.5 font-semibold">
+                Wally
+                <span class="inline-flex items-center gap-0.5 rounded-[4px] bg-blurple px-1 py-px text-[10px] leading-tight font-semibold text-white">
+                  <svg viewBox="0 0 16 16" class="size-2.5" aria-hidden="true"><path fill="currentColor" d="M6.2 11.6 2.6 8l1.1-1.1 2.5 2.5 6.1-6.1 1.1 1.1z"></path></svg>
+                  BOT
+                </span>
+              </p>
+              <p class="text-xs text-fg-subtle">Moderation, tickets, levels and giveaways</p>
+            </div>
+          </div>
+          <div class="mt-4 rounded-[4px] bg-ink-950/70 px-3 py-2 text-sm text-fg-muted">
+            <span class="text-bots">/giveaway start</span> prize: Custom MLO
+          </div>
         </div>
-        <div class="w-10">
-          <WallyAvatar compact decorative />
-          <p class="mt-2 text-center font-mono text-xs text-fg-muted">compact</p>
-        </div>
+
+        <GlassCard class="tone-fivem p-6">
+          <div class="flex flex-wrap gap-1.5">
+            {site.frameworks.slice(0, 3).map((f) => <Pill>{f}</Pill>)}
+          </div>
+          <h3 class="mt-5 text-xl font-bold">Content card</h3>
+          <p class="mt-2 text-sm leading-relaxed text-fg-muted">
+            14px corners, 4% white glass. Hover it for the inner glow and the cursor spotlight.
+          </p>
+        </GlassCard>
       </div>
+    </section>
+
+    <!-- Wally + sparkles -->
+    <section class="mt-28 flex flex-wrap items-center gap-12" aria-labelledby="t-wally">
+      <h2 id="t-wally" class="sr-only">Mascot</h2>
+      <div class="relative w-56">
+        <WallyAvatar />
+        <Sparkle class="absolute -top-2 right-4 size-6" color="text-cyan" />
+        <Sparkle class="absolute bottom-6 -left-3 size-4" color="text-magenta" delay={900} />
+      </div>
+      <p class="max-w-[46ch] text-fg-muted">
+        Wally is the centerpiece of the hero and the avatar in every Discord mockup. Until the real PNG is added, this
+        placeholder shows where he goes.
+      </p>
     </section>
   </main>
 </Base>

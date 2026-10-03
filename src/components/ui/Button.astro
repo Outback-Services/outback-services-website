@@ -9,7 +9,7 @@ interface Props extends Omit<HTMLAttributes<'a'>, 'href'> {
   variant?: 'primary' | 'ghost';
   size?: 'md' | 'lg';
   icon?: IconName;
-  /** Show the trailing arrow that nudges right on hover. */
+  /** Trailing arrow that nudges right on hover. Primary CTAs only. */
   arrow?: boolean;
   /** Magnetic pull toward the cursor (pointer devices only). */
   magnetic?: boolean;
@@ -33,7 +33,7 @@ const sizes = {
 const variants = {
   // Ink text on the gradient keeps ≥ 5:1 contrast across all three stops.
   primary: 'text-ink-950 font-semibold',
-  ghost: 'glass text-fg font-medium hover:bg-glass-strong hover:border-glass-border-strong',
+  ghost: 'border border-glass-border-strong text-fg font-medium hover:bg-glass-strong hover:border-fg-subtle',
 };
 ---
 
@@ -42,7 +42,7 @@ const variants = {
   {...rest}
   data-magnetic={magnetic ? '' : undefined}
   class:list={[
-    'group relative isolate inline-flex shrink-0 items-center justify-center rounded-full whitespace-nowrap',
+    'group relative isolate inline-flex shrink-0 items-center justify-center rounded-control whitespace-nowrap',
     'transition-[background-color,border-color] duration-300',
     sizes[size],
     variants[variant],
@@ -53,13 +53,13 @@ const variants = {
     variant === 'primary' && (
       <>
         <span class="cta-glow" aria-hidden="true" />
-        <span class="absolute inset-0 -z-10 rounded-full" style="background: var(--gradient-brand)" aria-hidden="true" />
+        <span class="absolute inset-0 -z-10 rounded-[inherit]" style="background: var(--gradient-brand)" aria-hidden="true" />
       </>
     )
   }
   <span class="magnetic-inner inline-flex items-center gap-[inherit]">
     {icon && <Icon name={icon} class="size-[1.15em]" />}
     <slot />
-    {arrow && <Icon name="arrow-right" class="cta-arrow size-[1.1em]" />}
+    {arrow && variant === 'primary' && <Icon name="arrow-right" class="cta-arrow size-[1.1em]" />}
   </span>
 </a>

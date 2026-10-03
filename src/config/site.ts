@@ -90,7 +90,8 @@ export const site = {
 
   // ── Hero ─────────────────────────────────────────────────────────────────
   hero: {
-    eyebrow: 'FiveM scripts · Discord bots',
+    // The one wide-tracked tagline on the page (brand banner treatment).
+    tagline: 'Scripts and bots for serious RP servers',
     // Rendered as: {headlineLead} <gradient>{headlineHighlight}</gradient>
     headlineLead: 'FiveM scripts & Discord bots,',
     headlineHighlight: 'built properly.',

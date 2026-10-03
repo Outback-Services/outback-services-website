@@ -203,8 +203,8 @@ export const site = {
   founder: {
     title: 'Who you’ll be working with',
     name: 'Tucker',
-    role: 'Founder & developer',
-    bio: 'Discord.gg/outback - Cheap Fivem Scripts',
+    role: 'Wally Founder & Developer',
+    bio: 'Experienced FiveM and Discord Developer',
     /** Path under /public. Leave empty to show the placeholder. */
     avatar: '',
     cta: 'Say g’day in the Discord',

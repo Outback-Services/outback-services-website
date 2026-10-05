@@ -59,7 +59,7 @@ export const site = {
   siteUrl: 'https://outbackdev.com',
   discordUrl: 'https://discord.gg/outback',
   wallyInviteUrl: 'https://discord.com/oauth2/authorize?client_id=1553018928219824278',
-  tebexUrl: 'https://discord.gg/outback',
+  tebexUrl: 'https://outbackdev.tebex.io/',
   tebexRefundPolicyUrl: 'https://discord.com/channels/1555560577194004523/1555811122479763476',
   githubUrl: 'https://github.com/outback-services',
   githubOrg: 'outback-services',
